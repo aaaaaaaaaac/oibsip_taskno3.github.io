@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temperature Converter</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #ffffff;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+            background-color: #f2f2f2;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            margin-top: 0;
+            font-size: 48px;
+            font-weight: bold;
+            color: #1c2331;
+        }
+
+        form {
+            margin-top: 40px;
+        }
+
+        label {
+            display: inline-block;
+            margin-bottom: 10px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #1c2331;
+        }
+
+        input[type="number"] {
+            padding: 10px;
+            width: 100%;
+            font-size: 18px;
+            border-radius: 5px;
+            border: none;
+            background-color: #f7f7f7;
+            margin-bottom: 20px;
+            box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        select {
+            padding: 10px;
+            width: 100%;
+            font-size: 18px;
+            border-radius: 5px;
+            border: none;
+            background-color: #f7f7f7;
+            margin-bottom: 20px;
+            box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        button[type="submit"] {
+            background-color: #1c2331;
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #2c3e50;
+        }
+
+        #result {
+            margin-top: 40px;
+            font-size: 24px;
+            font-weight: bold;
+            color: #1c2331;
+        }
+
+        .symbol {
+            position: fixed;
+            bottom: 50%;
+            right: 50px;
+            transform: translateY(50%);
+            width: 100px;
+            height: 100px;
+            background-image: url("https://www.example.com/symbol.png");
+            background-repeat: no-repeat;
+            background-size: contain;
+            z-index: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Temperature Converter</h1>
+    <form>
+        <div class="form-group">
+            <label for="temp">Enter temperature:</label>
+            <input type="number" id="temp" name="temp" required>
+        </div>
+        <div class="form-group">
+            <label for="unit">Select unit:</label>
+            <select id="unit" name="unit">
+                <option value="Celsius">Celsius</option>
+                <option value="Fahrenheit">Fahrenheit</option>
+                <option value="Kelvin">Kelvin</option>
+            </select>
+        </div>
+        <button type="submit" onclick="convertTemp(event)">Convert</button>
+    </form>
+    <div id="result"></div>
+    <script>
+        function convertTemp(event) {
+            event.preventDefault();
+
+            const tempInput = document.getElementById("temp");
+            const temp = parseFloat(tempInput.value);
+            if (isNaN(temp)) {
+                alert("Please enter a valid temperature.");
+                return;
+            }
+
+            const unitSelect = document.getElementById("unit");
+            const unit = unitSelect.value;
+
+            let celsius, fahrenheit, kelvin;
+
+            switch (unit) {
+                case "Celsius":
+                    celsius = temp;
+                    fahrenheit = (temp * 9 / 5) + 32;
+                    kelvin = temp + 273.15;
+                    break;
+
+                case "Fahrenheit":
+                    celsius = (temp - 32) * 5 / 9;
+                    fahrenheit = temp;
+                    kelvin = (temp + 459.67) * 5 / 9;
+                    break;
+
+                case "Kelvin":
+                    celsius = temp - 273.15;
+                    fahrenheit = (temp * 9 / 5) - 459.67;
+                    kelvin = temp;
+                    break;
+            }
+
+            const resultDiv = document.getElementById("result");
+            resultDiv.innerHTML = `
+    <p>${temp} ${unit} is:</p>
+    <ul>
+      <li>${celsius.toFixed(2)} Celsius</li>
+      <li>${fahrenheit.toFixed(2)} Fahrenheit</li>
+      <li>${kelvin.toFixed(2)} Kelvin</li>
+    </ul>
+  `;
+        }
+
+    </script>
+</body>
+
+</html>
